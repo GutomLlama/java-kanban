@@ -199,6 +199,5 @@ public class TaskManager {
         }
 
         epic.setStatus(epicStatus);
-        epics.put(epicId, epic);
     }
 }
