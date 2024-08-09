@@ -1,3 +1,6 @@
+import model.*;
+import service.TaskManager;
+
 public class Main {
     public static void main(String[] args) {
         TaskManager taskManager = new TaskManager();
@@ -9,14 +12,14 @@ public class Main {
         taskManager.addTask(task2);
 
         // Создаем эпики и подзадачи
-        Epic epic1 = new Epic("Эпик 1", "Описание 1", 3, Status.NEW);
+        Epic epic1 = new Epic("Эпик 1", "Описание 1", 3);
         Subtask subtask1 = new Subtask("Подзадача 1", "Описание 1", 4, Status.NEW, 3);
         Subtask subtask2 = new Subtask("Подзадача 2", "Описание 2", 5, Status.NEW, 3);
         taskManager.addEpic(epic1);
         taskManager.addSubtask(subtask1);
         taskManager.addSubtask(subtask2);
 
-        Epic epic2 = new Epic("Эпик 2", "Описание 2", 6, Status.NEW);
+        Epic epic2 = new Epic("Эпик 2", "Описание 2", 6);
         Subtask subtask3 = new Subtask("Подзадача 3", "Описание 3", 7, Status.NEW, 6);
         taskManager.addEpic(epic2);
         taskManager.addSubtask(subtask3);
@@ -45,9 +48,6 @@ public class Main {
         taskManager.updateSubtask(subtask1);
         taskManager.updateSubtask(subtask2);
         taskManager.updateSubtask(subtask3);
-
-        taskManager.updateEpicStatus(3);
-        taskManager.updateEpicStatus(6);
 
         // Печатаем обновленные списки
         System.out.println("Обновленные задачи:");

@@ -1,3 +1,5 @@
+package model;
+
 public class Subtask extends Task {
     // Идентификатор эпика, к которому принадлежит сабтаск
     private int epicId;
@@ -21,7 +23,7 @@ public class Subtask extends Task {
     // Возвращает строковое представление сабтаска
     @Override
     public String toString() {
-        return '\n' + "Subtask{" +
+        return '\n' + "model.Subtask{" +
                 "name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", status=" + getStatus() +

@@ -1,3 +1,5 @@
+package model;
+
 public class Task {
     private String name;
     private String description;
@@ -55,7 +57,7 @@ public class Task {
     // Строковое представление задачи
     @Override
     public String toString() {
-        return '\n' + "Task{" +
+        return '\n' + "model.Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +

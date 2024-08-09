@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {
@@ -5,8 +7,8 @@ public class Epic extends Task {
     private ArrayList<Integer> subtasksIds = new ArrayList<>();
 
     // Конструктор эпика
-    public Epic(String name, String description, Integer id, Status status) {
-        super(name, description, id, status);
+    public Epic(String name, String description, Integer id) {
+        super(name, description, id, Status.NEW);
     }
 
     // Возвращает список идентификаторов сабтасков эпика
@@ -37,7 +39,7 @@ public class Epic extends Task {
     // Строковое представление эпика
     @Override
     public String toString() {
-        return '\n' + "Epic{" +
+        return '\n' + "model.Epic{" +
                 "name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", status=" + getStatus() +
