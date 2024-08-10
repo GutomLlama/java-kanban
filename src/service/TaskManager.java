@@ -168,36 +168,34 @@ public class TaskManager {
         Epic epic = epics.get(epicId);
         ArrayList<Subtask> subtasksForEpic = getSubtasksForEpic(epicId);
 
-        boolean hasInProgress = false;
-        boolean hasNew = false;
-        boolean hasDone = true;
+        if (subtasksForEpic.isEmpty()) {
+            epic.setStatus(Status.NEW);
+            return;
+        }
+
+        int newCount = 0;
+        int doneCount = 0;
 
         for (Subtask subtask : subtasksForEpic) {
             switch (subtask.getStatus()) {
                 case IN_PROGRESS:
-                    hasInProgress = true;
-                    hasNew = false;
-                    break;
+                    epic.setStatus(Status.IN_PROGRESS);
+                    return;
                 case NEW:
-                    hasNew = true;
-                    hasDone = false;
+                    newCount++;
                     break;
                 case DONE:
+                    doneCount++;
                     break;
             }
         }
 
-        Status epicStatus;
-        if (hasInProgress) {
-            epicStatus = Status.IN_PROGRESS;
-        } else if (hasNew) {
-            epicStatus = Status.IN_PROGRESS;
-        } else if (hasDone) {
-            epicStatus = Status.DONE;
+        if (doneCount == subtasksForEpic.size()) {
+            epic.setStatus(Status.DONE);
+        } else if (newCount == subtasksForEpic.size()) {
+            epic.setStatus(Status.NEW);
         } else {
-            epicStatus = Status.NEW;
+            epic.setStatus(Status.IN_PROGRESS);
         }
-
-        epic.setStatus(epicStatus);
     }
 }
