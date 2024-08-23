@@ -6,8 +6,14 @@ public class Subtask extends Task {
 
     // Конструктор сабтаска
     public Subtask(String name, String description, Integer id, Status status, int epicId) {
-        super(name, description, id, status);
+        super();
         this.epicId = epicId;
+    }
+
+    public Subtask(String name, String description, Status status) {
+    }
+
+    public Subtask(String testSubtask, String testSubtaskDescription, Status status, int id) {
     }
 
     // Возвращает идентификатор эпика, к которому принадлежит сабтаск

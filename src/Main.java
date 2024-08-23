@@ -1,13 +1,13 @@
 import model.*;
-import service.TaskManager;
+import service.*;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Managers.getDefault();
 
         // Создаем задачи
-        Task task1 = new Task("Задача 1", "Описание 1", 1, Status.NEW);
-        Task task2 = new Task("Задача 2", "Описание 2", 2, Status.NEW);
+        Task task1 = new Task();
+        Task task2 = new Task();
         taskManager.addTask(task1);
         taskManager.addTask(task2);
 

@@ -8,7 +8,11 @@ public class Epic extends Task {
 
     // Конструктор эпика
     public Epic(String name, String description, Integer id) {
-        super(name, description, id, Status.NEW);
+        super();
+    }
+
+    public Epic(String name, String description) {
+        super();
     }
 
     // Возвращает список идентификаторов сабтасков эпика

@@ -7,11 +7,14 @@ public class Task {
     private Status status;
 
     // Конструктор задачи
-    public Task(String name, String description, Integer id, Status status) {
+    public Task() {
         this.name = name;
         this.description = description;
         this.id = id;
         this.status = status;
+    }
+
+    public Task(String name, String description, Status status) {
     }
 
     // Возвращает название задачи
