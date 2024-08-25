@@ -1,4 +1,4 @@
-package test.manager;
+package manager;
 
 import model.*;
 import service.*;
@@ -53,5 +53,4 @@ public class InMemoryHistoryManagerTest {
         List<Task> history = historyManager.getHistory();
         assertEquals(10, history.size(), "История содержит более 10 значений");
     }
-
 }

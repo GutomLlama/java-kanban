@@ -1,4 +1,4 @@
-package test.manager;
+package manager;
 
 import model.*;
 import service.*;
@@ -11,11 +11,12 @@ import java.util.List;
 
 public class InMemoryTaskManagerTest {
     private TaskManager taskManager;
+    private HistoryManager historyManager;
 
     @BeforeEach
     public void beforeEach() {
         taskManager = new InMemoryTaskManager();
-        historyManager = taskManager.getHistoryManager();
+
     }
 
     @Test
@@ -66,5 +67,44 @@ public class InMemoryTaskManagerTest {
         Task savedTask = taskManager.getTask(task.getId());
 
         assertEquals(task, savedTask, "Задача была изменена");
+    }
+
+    @Test
+    void tasksWithSameIdAreEqual() {
+        // Экземпляры класса Task равны друг другу, если равен их id
+        Task task1 = new Task("Test task", "Test task description", Status.NEW);
+        Task task2 = new Task("Test task", "Test task description", Status.NEW);
+        task2.setId(task1.getId());
+
+        assertEquals(task1, task2, "Задачи с одинаковым id не равны");
+    }
+
+    @Test
+    void taskSubclassesWithSameIdAreEqual() {
+        // Наследники класса Task равны друг другу, если равен их id
+        Epic epic1 = new Epic("Test epic", "Test epic description");
+        Epic epic2 = new Epic("Test epic", "Test epic description");
+        epic2.setId(epic1.getId());
+
+        assertEquals(epic1, epic2, "Эпики с одинаковым id не равны");
+
+        Subtask subtask1 = new Subtask("Test subtask", "Test subtask description", Status.NEW, epic1.getId());
+        Subtask subtask2 = new Subtask("Test subtask", "Test subtask description", Status.NEW, epic1.getId());
+        subtask2.setId(subtask1.getId());
+
+        assertEquals(subtask1, subtask2, "Сабтаски с одинаковым id не равны");
+    }
+
+    @Test
+    void addTaskToHistory() {
+        // Добавление в историю
+        Task task = new Task("Test addTaskToHistory", "Test addTaskToHistory description", Status.NEW);
+        taskManager.addTask(task);
+        historyManager.add(task);
+
+        List<Task> history = historyManager.getHistory();
+
+        assertNotNull(history, "История не пустая");
+        assertEquals(1, history.size(), "История не пустая");
     }
 }
