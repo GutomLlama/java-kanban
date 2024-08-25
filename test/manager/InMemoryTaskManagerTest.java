@@ -15,6 +15,7 @@ public class InMemoryTaskManagerTest {
     @BeforeEach
     public void beforeEach() {
         taskManager = new InMemoryTaskManager();
+        historyManager = taskManager.getHistoryManager();
     }
 
     @Test

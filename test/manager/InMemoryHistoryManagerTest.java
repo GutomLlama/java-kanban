@@ -24,14 +24,34 @@ public class InMemoryHistoryManagerTest {
         Task task = new Task("Test task", "Test task description", Status.NEW);
         Task updatedTask = new Task("Test task", "Test task description", Status.IN_PROGRESS);
 
-        historyManager.add(task);
-        historyManager.add(updatedTask);
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        taskManager.addTask(task);
+        taskManager.getTask(task.getId()); // add task to history
+        taskManager.updateTask(updatedTask);
 
-        List<Task> history = historyManager.getHistory();
+        List<Task> history = taskManager.getHistory();
 
         assertNotNull(history, "История не найдена");
         assertEquals(2, history.size(), "История не содержит двух версий задачи");
         assertEquals(task, history.get(0), "Предыдущая версия задачи не найдена");
         assertEquals(updatedTask, history.get(1), "Обновленная версия задачи не найдена");
     }
+
+    @Test
+    void shouldNotAddNullToHistory() {
+        // История не должна содержать null значений
+        assertThrows(NullPointerException.class, () -> historyManager.add(null));
+    }
+
+    @Test
+    void shouldNotContainMoreThan10Values() {
+        // История не должна содержать более 10 значений
+        for (int i = 0; i < 11; i++) {
+            Task task = new Task("Task " + i, "Task description " + i, Status.NEW);
+            historyManager.add(task);
+        }
+        List<Task> history = historyManager.getHistory();
+        assertEquals(10, history.size(), "История содержит более 10 значений");
+    }
+
 }

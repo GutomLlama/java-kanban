@@ -14,7 +14,7 @@ public class InMemoryTaskManager implements TaskManager {
     private HistoryManager historyManager;
 
     public InMemoryTaskManager() {
-        this.historyManager = new InMemoryHistoryManager();
+        this.historyManager = Managers.getDefaultHistoryManager();
         this.tasks = new HashMap<>();
         this.epics = new HashMap<>();
         this.subtasks = new HashMap<>();
@@ -142,7 +142,11 @@ public class InMemoryTaskManager implements TaskManager {
     // Возвращение задачи по id
     @Override
     public Task getTask(int id) {
-        return tasks.get(id);
+        Task task = tasks.get(id);
+        if (task != null) {
+            historyManager.add(task);
+        }
+        return task;
     }
 
     // Возвращение эпика по id
@@ -228,7 +232,3 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 }
-
-
-
-
