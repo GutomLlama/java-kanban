@@ -35,6 +35,7 @@ public class InMemoryTaskManager implements TaskManager {
     // Добавление новой задачи
     @Override
     public void addTask(Task task) {
+        task.setId(generateId());
         tasks.put(task.getId(), task);
     }
 
@@ -63,9 +64,10 @@ public class InMemoryTaskManager implements TaskManager {
     // Добавление нового сабтаска
     @Override
     public void addSubtask(Subtask subtask) {
-        subtasks.put(subtask.getId(), subtask);
         Epic epic = epics.get(subtask.getEpicId());
         if (epic != null) {
+            subtask.setId(generateId());
+            subtasks.put(subtask.getId(), subtask);
             epic.getSubtasksIds().add(subtask.getId());
             updateEpicStatus(subtask.getEpicId());
         }
@@ -74,8 +76,15 @@ public class InMemoryTaskManager implements TaskManager {
     // Обновление существующего сабтаска
     @Override
     public void updateSubtask(Subtask subtask) {
-        subtasks.put(subtask.getId(), subtask);
-        updateEpicStatus(subtask.getEpicId());
+        if (subtasks.containsKey(subtask.getId())) {
+            subtasks.put(subtask.getId(), subtask);
+            Epic epic = epics.get(subtask.getEpicId());
+            if (epic != null) {
+                updateEpicStatus(subtask.getEpicId());
+            }
+        } else {
+            System.out.println("Подзадача не найдена.");
+        }
     }
 
     // Удаление существующей задачи
@@ -152,13 +161,21 @@ public class InMemoryTaskManager implements TaskManager {
     // Возвращение эпика по id
     @Override
     public Epic getEpic(int id) {
-        return epics.get(id);
+        Epic epic = epics.get(id);
+        if (epic != null) {
+            historyManager.add(epic);
+        }
+        return epic;
     }
 
     // Возвращение сабтаска по id
     @Override
     public Subtask getSubtask(int id) {
-        return subtasks.get(id);
+        Subtask subtask = subtasks.get(id);
+        if (subtask != null) {
+            historyManager.add(subtask);
+        }
+        return subtask;
     }
 
     // Возвращение списка всех задач
