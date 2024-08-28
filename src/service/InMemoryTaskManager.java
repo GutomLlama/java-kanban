@@ -48,6 +48,7 @@ public class InMemoryTaskManager implements TaskManager {
     // Добавление нового эпика
     @Override
     public void addEpic(Epic epic) {
+        epic.setId(generateId());
         epics.put(epic.getId(), epic);
     }
 

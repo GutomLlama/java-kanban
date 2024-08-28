@@ -100,11 +100,27 @@ public class InMemoryTaskManagerTest {
         // Добавление в историю
         Task task = new Task("Test addTaskToHistory", "Test addTaskToHistory description", Status.NEW);
         taskManager.addTask(task);
-        historyManager.add(task);
+        taskManager.getTask(task.getId());
 
-        List<Task> history = historyManager.getHistory();
+        List<Task> history = taskManager.getHistory();
 
         assertNotNull(history, "История не пустая");
         assertEquals(1, history.size(), "История не пустая");
+    }
+
+    @Test
+    void shouldNotAddNullToHistory() {
+        // История не должна содержать null значений
+        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        Task task = new Task("Test task", "Test task description", Status.NEW);
+        taskManager.addTask(task);
+        taskManager.getTask(task.getId());
+
+        Task nonExistingTask = taskManager.getTask(-1);
+        List<Task> history = taskManager.getHistory();
+
+        assertNotNull(history, "История не найдена");
+        assertEquals(1, history.size(), "История содержит null значение");
+        assertNull(nonExistingTask, "Задача с несуществующим id не null");
     }
 }

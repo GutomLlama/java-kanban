@@ -38,12 +38,6 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void shouldNotAddNullToHistory() {
-        // История не должна содержать null значений
-        assertThrows(NullPointerException.class, () -> historyManager.add(null));
-    }
-
-    @Test
     void shouldNotContainMoreThan10Values() {
         // История не должна содержать более 10 значений
         for (int i = 0; i < 11; i++) {
